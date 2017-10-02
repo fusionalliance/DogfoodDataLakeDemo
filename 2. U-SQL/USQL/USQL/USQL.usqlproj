@@ -21,9 +21,9 @@
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Script Include="Script.usql" />
-    <ScriptCode Include="Script.usql.cs">
-      <DependentUpon>Script.usql</DependentUpon>
+    <Script Include="IdentifyHitOnTwelve.usql" />
+    <ScriptCode Include="IdentifyHitOnTwelve.usql.cs">
+      <DependentUpon>IdentifyHitOnTwelve.usql</DependentUpon>
     </ScriptCode>
   </ItemGroup>
   <Import Project="$(AppData)\Microsoft\DataLake\MsBuild\1.0\Usql.targets" />

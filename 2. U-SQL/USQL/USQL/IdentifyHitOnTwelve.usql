@@ -1,1 +1,15 @@
-﻿
+﻿@input = 
+    EXTRACT [PlayerCardOne] string,
+            [PlayerCardOneValue] int,
+            [PlayerCardTwo] string,
+            [PlayerCardTwoValue] int,
+            [PlayerCardsValue] int,
+            [DealerShowCard] string,
+            [DealerShowCardValue] int,
+            [DealerTotal] int,
+            [WinAmount] double
+    FROM "adl://dogfoodcon.azuredatalakestore.net/RawHandData/HandData.csv"
+    USING Extractors.Csv(skipFirstNRows:1);
+OUTPUT @input
+TO "adl://dogfoodcon.azuredatalakestore.net/RawHandData/HandData2.csv"
+USING Outputters.Csv();
