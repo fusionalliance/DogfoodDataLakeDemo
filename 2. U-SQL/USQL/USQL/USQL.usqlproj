@@ -21,11 +21,18 @@
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Script Include="BakedCake.usql">
+      <RecurrenceName>BakedCake_ADLVSTool</RecurrenceName>
+      <RecurrenceId>229ff467-16a5-4db5-89c7-c1885d66eec0</RecurrenceId>
+    </Script>
     <Script Include="MergeFiles.usql" />
     <Script Include="IdentifyHitOnTwelve.usql">
       <RecurrenceName>IdentifyHitOnTwelve_ADLVSTool</RecurrenceName>
       <RecurrenceId>a262852c-3452-4c60-8d1e-d2607f0b8252</RecurrenceId>
     </Script>
+    <ScriptCode Include="BakedCake.usql.cs">
+      <DependentUpon>BakedCake.usql</DependentUpon>
+    </ScriptCode>
     <ScriptCode Include="MergeFiles.usql.cs">
       <DependentUpon>MergeFiles.usql</DependentUpon>
     </ScriptCode>
