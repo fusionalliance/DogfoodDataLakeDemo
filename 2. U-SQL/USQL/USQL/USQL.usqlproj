@@ -21,7 +21,14 @@
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Script Include="IdentifyHitOnTwelve.usql" />
+    <Script Include="MergeFiles.usql" />
+    <Script Include="IdentifyHitOnTwelve.usql">
+      <RecurrenceName>IdentifyHitOnTwelve_ADLVSTool</RecurrenceName>
+      <RecurrenceId>a262852c-3452-4c60-8d1e-d2607f0b8252</RecurrenceId>
+    </Script>
+    <ScriptCode Include="MergeFiles.usql.cs">
+      <DependentUpon>MergeFiles.usql</DependentUpon>
+    </ScriptCode>
     <ScriptCode Include="IdentifyHitOnTwelve.usql.cs">
       <DependentUpon>IdentifyHitOnTwelve.usql</DependentUpon>
     </ScriptCode>

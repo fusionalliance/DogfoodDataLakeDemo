@@ -26,29 +26,33 @@
     FROM "adl://dogfoodcon.azuredatalakestore.net/HandDataStand.csv"
     USING Extractors.Csv(skipFirstNRows:1);
 @joined =
-    SELECT [PlayerStartingTotal],
+    SELECT [PlayerCardOne],
+           [PlayerCardOneValue],
+           [PlayerCardTwo],
+           [PlayerCardTwoValue],
+           [PlayerStartingTotal],
            [PlayerCardsValue],
-           [WinAmount]
+           [DealerShowCard],
+           [DealerShowCardValue],
+           [DealerTotal],
+           [WinAmount],
+           true AS [Hit]
     FROM @inputhit
-    WHERE DealerShowCardValue == 2 AND PlayerStartingTotal == 13
     UNION ALL
-    SELECT [PlayerStartingTotal],
+    SELECT [PlayerCardOne],
+           [PlayerCardOneValue],
+           [PlayerCardTwo],
+           [PlayerCardTwoValue],
+           [PlayerStartingTotal],
            [PlayerCardsValue],
-           [WinAmount]
-    FROM @inputstand
-    WHERE [DealerShowCardValue] == 2 AND PlayerStartingTotal == 13;
-
-@winner =
-    SELECT string.Format("The {0}",1) AS lol,@joined 
-    FROM @joined;
-         
-@aggByType =
-    SELECT ([PlayerCardsValue] > 13) AS  Hit, SUM(WinAmount) AS WinAmount
-    FROM @winner
-        
-    GROUP BY
-        ([PlayerCardsValue] > 13);
+           [DealerShowCard],
+           [DealerShowCardValue],
+           [DealerTotal],
+           [WinAmount],
+           false AS [Hit]
+    FROM @inputstand;
+@detail = SELECT new SQL.ARRAY<string>(PlayerCardOne.Where(a=>a == 1) FROM @joined
     
-OUTPUT @aggByType
-TO "adl://dogfoodcon.azuredatalakestore.net/RawHandData/HandData2.csv"
+OUTPUT @joined
+TO "adl://dogfoodcon.azuredatalakestore.net/RawHandData/Merged.csv"
 USING Outputters.Csv();

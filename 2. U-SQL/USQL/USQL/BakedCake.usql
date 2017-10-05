@@ -1,0 +1,27 @@
+﻿@input = 
+    EXTRACT [PlayerCardOne] string,
+            [PlayerCardOneValue] int,
+            [PlayerCardTwo] string,
+            [PlayerCardTwoValue] int,
+            [PlayerStartingTotal] int,
+            [PlayerCardsValue] int,
+            [DealerShowCard] string,
+            [DealerShowCardValue] int,
+            [DealerTotal] int,
+            [WinAmount] decimal
+    FROM "adl://dogfoodcon.azuredatalakestore.net/RawHandData/Demo/RawHandData.csv"
+    USING Extractors.Csv(skipFirstNRows:1);
+@thirteenonly =
+    SELECT string.Format("The player {0}", PlayerCardsValue > 13? "Hit" : "Stood") AS Hit,
+           WinAmount
+    FROM @input
+    WHERE DealerShowCardValue == 2 AND PlayerStartingTotal == 13;
+
+@results =
+    SELECT Hit,
+           SUM(WinAmount) AS Amount
+    FROM @thirteenonly
+    GROUP BY Hit;
+OUTPUT @results
+TO "adl://dogfoodcon.azuredatalakestore.net/RawHandData/Test.csv"
+USING Outputters.Csv();
